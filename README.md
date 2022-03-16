@@ -6,4 +6,4 @@ DoLittle
 A little hobby token
 
 ### Contract's Etherscan Address:
-https://rinkeby.etherscan.io/tx/0x1abcc7ba98032416d93a40e54ae4086587c30299fa6aea1becfb27c96f4caaf0
+https://rinkeby.etherscan.io/address/0x3dfb69e2ecef632bc207e81cd8f3c60774f6a6ef
