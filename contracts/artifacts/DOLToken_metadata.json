@@ -69,7 +69,7 @@
 					},
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "delegate",
 						"type": "address"
 					}
 				],
@@ -88,12 +88,36 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "approvalList",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "delegate",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "numTokens",
 						"type": "uint256"
 					}
 				],
@@ -114,14 +138,9 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
 					}
 				],
-				"name": "approved",
+				"name": "balanceList",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -136,7 +155,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "tokenOwner",
 						"type": "address"
 					}
 				],
@@ -160,7 +179,13 @@
 					}
 				],
 				"name": "buyToken",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"stateMutability": "payable",
 				"type": "function"
 			},
@@ -169,9 +194,9 @@
 				"name": "decimals",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "uint8",
 						"name": "",
-						"type": "uint256"
+						"type": "uint8"
 					}
 				],
 				"stateMutability": "view",
@@ -220,12 +245,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "receiver",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "numTokens",
 						"type": "uint256"
 					}
 				],
@@ -244,17 +269,17 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "from",
+						"name": "owner",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "buyer",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "numTokens",
 						"type": "uint256"
 					}
 				],
@@ -273,24 +298,7 @@
 		"devdoc": {
 			"kind": "dev",
 			"methods": {
-				"allowance(address,address)": {
-					"details": "Returns the remaining number of tokens that `spender` will be allowed to spend on behalf of `owner` through {transferFrom}. This is zero by default. This value changes when {approve} or {transferFrom} are called."
-				},
-				"approve(address,uint256)": {
-					"details": "Sets `amount` as the allowance of `spender` over the caller's tokens. Returns a boolean value indicating whether the operation succeeded. IMPORTANT: Beware that changing an allowance with this method brings the risk that someone may use both the old and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729 Emits an {Approval} event."
-				},
-				"transfer(address,uint256)": {
-					"details": "Moves `amount` tokens from the caller's account to `to`. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
-				},
-				"transferFrom(address,address,uint256)": {
-					"details": "Moves `amount` tokens from `from` to `to` using the allowance mechanism. `amount` is then deducted from the caller's allowance. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
-				}
-			},
-			"stateVariables": {
-				"balanceOf": {
-					"details": "Returns the amount of tokens owned by `account`."
-				},
-				"totalSupply": {
+				"totalSupply()": {
 					"details": "Returns the amount of tokens in existence."
 				}
 			},
@@ -319,11 +327,11 @@
 	},
 	"sources": {
 		"contracts/DOLToken.sol": {
-			"keccak256": "0xedbcbc1dc18717afaf32fc9a19a99dfe49952e453a6775906e6aa22c29ad6c6c",
+			"keccak256": "0x9a68b468e7f03fc7ce041cd951bb18f532d02d8e6ccc59d39a3a3ede7ea2a200",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c6162821b4bba9513948cdf1018f915063c513ba223ab0587f001938c092be7a",
-				"dweb:/ipfs/QmTRr1VJkp6NrpCMTa5YsRAY923B2KzwcRo2AMUZQdbbga"
+				"bzz-raw://b832fdfe5fde74f23aa6303d36c5bfe2dd3d4cc5c0ce29998b54a3ab9823d666",
+				"dweb:/ipfs/QmdE1xUXTRuDkNgbk7rSKzamBjzcNhqvVZpMGJwJYui5Bw"
 			]
 		},
 		"contracts/IERC20.sol": {

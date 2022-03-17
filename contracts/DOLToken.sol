@@ -1,57 +1,71 @@
 // SPDX-License-Identifier: MIT
-
-
 pragma solidity ^0.8.0;
 
 import "./IERC20.sol";
 
 contract DOLToken is IERC20 {
-    string public name = "DoLittle";
+    uint8 public decimals = 18;
     string public symbol = "DOL";
-    uint public decimals = 18;
-    uint DOLTokenPrice = 1 ether; // 1 ether = 1000 Tokens
+    string public name = "DoLittle";
 
-    uint public override totalSupply = 1000000 * (10 ** decimals);
+    uint DOLTokenPerEther = 1000;
+
+    uint supply = 1000000 * (10 ** decimals);
+
+    mapping(address => uint256) public balanceList; // [ownerAddress ==> tokenBalance]
+    mapping(address => mapping(address => uint256)) public approvalList; // [ownerAddress ==> [approvedDelegate ==> amountApproved]]
 
     constructor() {
-        // the user who deploys the contract gets total supply
-        balanceOf[msg.sender] = totalSupply;
+        // the user who deploys the contract (contractOwner) gets total supply
+        balanceList[msg.sender] = supply;
     }
 
-    mapping(address => uint256) public override balanceOf;
-    mapping(address => mapping(address => uint256)) public approved;
+    function totalSupply() public override view returns (uint256) {
+        return supply;
+    }
 
-    function transfer(address to, uint256 amount) public override returns (bool) {
-        // require(balanceOf[msg.sender] >= amount, "Insufficient balance")
-        balanceOf[msg.sender] -= amount;
-        balanceOf[to] += amount;
-        emit Transfer(msg.sender, to, amount);
+    function balanceOf(address tokenOwner) public override view returns (uint) {
+        return balanceList[tokenOwner];
+    }
+
+    function transfer(address receiver, uint256 numTokens) public override returns (bool) {
+        // require(balanceList[msg.sender] >= numTokens, "Insufficient balance")
+
+        balanceList[msg.sender] -= numTokens;
+        balanceList[receiver] += numTokens;
+        emit Transfer(msg.sender, receiver, numTokens);
         return true;
     }
 
-    function allowance(address owner, address spender) public view override returns(uint256) {
-        uint256 amount = approved[owner][spender];
-        return amount;
-    }
+    function approve(address delegate, uint256 numTokens) public override returns(bool) {
+        require(balanceList[msg.sender] >= numTokens, "Insufficient balance");
 
-    function approve(address spender, uint256 amount) public override returns(bool) {
-        require(balanceOf[msg.sender] >= amount, "Insufficient balance");
-        approved[msg.sender][spender] += amount;
-        emit Approval(msg.sender, spender, amount);
+        approvalList[msg.sender][delegate] += numTokens;
+        emit Approval(msg.sender, delegate, numTokens);
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 amount) public override returns(bool) {
-        require(approved[from][msg.sender] >= amount, "Amount not approved");
-        approved[from][msg.sender] -= amount;
-        balanceOf[from] -= amount;
-        balanceOf[to] += amount;
-        emit Transfer(from, to, amount);
+    function allowance(address owner, address delegate) public view override returns(uint256) {
+        uint256 tokensApprovedForWithdrawal = approvalList[owner][delegate];
+        return tokensApprovedForWithdrawal;
+    }
+
+    function transferFrom(address owner, address buyer, uint256 numTokens) public override returns(bool) {
+        require(balanceList[owner] >= numTokens, "Insufficient balance");
+        require(approvalList[owner][msg.sender] >= numTokens, "Specified number of tokens not approved for withdrawal");
+
+        approvalList[owner][msg.sender] -= numTokens;
+        balanceList[owner] -= numTokens;
+        balanceList[buyer] += numTokens;
+        emit Transfer(owner, buyer, numTokens);
         return true;
     }
 
-    function buyToken(address receiver) public payable {
-        require(msg.value == DOLTokenPrice, "Sale price is 1 ether for 1000DOL");
-        transferFrom(msg.sender, receiver, 1000);
+    function buyToken(address receiver) public payable returns(uint) {
+        uint256 numTokens = msg.value/10^18 * DOLTokenPerEther;
+        transfer(receiver, numTokens);
+
+        supply += numTokens;
+        return supply;
     }
 }
