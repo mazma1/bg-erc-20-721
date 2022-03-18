@@ -18,4 +18,5 @@ NFToken (NTK)
 - ipfs.io/ipfs/QmYic8ntVSvYAW3AzVyw2fainK92sCozwX2PHux2EDqUrn
 
 ### Contract's Etherscan Address:
-https://rinkeby.etherscan.io/address/0x94327a340ba47bc8cfbb7180b70fa49fc9fdf818
+<!-- https://rinkeby.etherscan.io/address/0x94327a340ba47bc8cfbb7180b70fa49fc9fdf818 -->
+https://ropsten.etherscan.io/address/0xc950e84f379c31c2431610477fe20d2dcd9ef0e5
